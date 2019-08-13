@@ -57,7 +57,9 @@ function insertNum(e) {
   if (display.innerText === '0' || display.innerText === '') {
     display.innerText = '';
     display.innerText = btnText;
-    // } else if (display.innerText.includes('.') && btnText === '.') {
+  } else if (display.innerText.includes('.') && btnText === '.') {
+    return false;
+    // } else if (display.innerText === '0' && btnText === '.') {
     //   display.innerText += '.';
   } else {
     display.innerText += btnText;
@@ -66,14 +68,16 @@ function insertNum(e) {
 
 function doMath(e) {
   let btnText = e.target.innerText;
-  let previousVal;
+  let firstOperand, nextOperand;
   switch (btnText) {
     case '+':
-      previousVal = display.innerText;
-      console.log('previousVal =', previousVal);
+      firstOperand = display.innerText;
+      console.log('firstOperand =', firstOperand);
       display.innerText = '';
-      // let result = parseInt(previousVal, 10) + parseInt(display.innerText, 10);
-      // display.innerText = result;
+      if (firstOperand !== '') {
+        let result = parseInt(firstOperand, 10) + parseInt(display.innerText, 10);
+        display.innerText = result;
+      }
       break;
     case '-':
 
@@ -90,10 +94,17 @@ function doMath(e) {
   }
 }
 
+if (display.innerText === '') {
+  display.innerText += '0';
+}
+
 function clearAll() {
-  display.innerText = '';
+  display.innerText = '0';
 }
 
 function clearLast() {
   display.innerText = display.innerText.slice(0, display.innerText.length - 1);
 }
+
+// if (display.innerText === '0' || display.innerText === '') {
+//   return false;
