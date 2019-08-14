@@ -26,16 +26,10 @@
 
 
     let newArr = [...arrMinMax];
-    let newnewArr = [];
 
     function newArrFilter() {
-      newArr.filter(element => {
-        if (element % 3 == 1) {
-          // newArr.splice(element, 1);
-          newnewArr.push(element);
-        }
-      });
-      return newnewArr;
+      let filteredArr = newArr.filter(element => element % 3 === 1);
+      return filteredArr;
     }
 
     console.log(newArrFilter());

@@ -1,48 +1,16 @@
-// // Variables
-
-// let display = document.getElementById('display');
-// let displayText = display.innerText;
-// let buttonNum = document.getElementsByClassName('button-num');
-
-// // let displayValue = '0';
-
-// // Functions
-
-// const insertNum = (clickObj) => {
-//   let buttonText = clickObj.target.innerText;
-//   // displayText += buttonText;
-
-//   if (displayText === '0' || displayText === '') {
-//     // displayText = '';
-//     displayText = buttonText;
-//   }
-
-// }
-
-// const allClear = () => {
-//   display.innerHTML = '';
-// }
-
-// const clear = () => {
-
-// }
-
-// // 
-
-// for (let i = 0; i < buttonNum.length; i++) {
-//   buttonNum[i].addEventListener('click', insertNum);
-// }
-
-
+// Variables
 let numBtns = document.querySelectorAll('div.button-num');
 let operatorBtns = document.querySelectorAll('div.button-operator');
-// let display = document.getElementById('display').innerText; // ???!?!?!
+let equals = document.getElementById('equals');
+
 let display = document.getElementById('display');
-// let displayText = display.innerText;
 let clearLastBtn = document.getElementsByClassName('clear');
 let clearAllBtn = document.getElementsByClassName('all-clear');
 
+let leftOperand, rightOperand, operator, result = null;
 
+
+// Events
 numBtns.forEach(btn => {
   btn.addEventListener('click', insertNum, false);
 });
@@ -52,59 +20,82 @@ operatorBtns.forEach(btn => {
 });
 
 
+// Functions
 function insertNum(e) {
-  let btnText = e.target.innerText;
-  if (display.innerText === '0' || display.innerText === '') {
+  let numberBtn = e.target.innerText;
+  if (numberBtn && display.innerText === '0') {
     display.innerText = '';
-    display.innerText = btnText;
-  } else if (display.innerText.includes('.') && btnText === '.') {
-    return false;
-    // } else if (display.innerText === '0' && btnText === '.') {
-    //   display.innerText += '.';
-  } else {
-    display.innerText += btnText;
+    display.innerText += numberBtn;
+  } else if (numberBtn) {
+    display.innerText += numberBtn;
+  } else if (numberBtn === '.' && (display.innerText.includes('.') || /* doesn't work */display.innerText[0] === '0')) {
+    display.innerText += '';
   }
 }
 
 function doMath(e) {
-  let btnText = e.target.innerText;
-  let firstOperand, nextOperand;
-  switch (btnText) {
-    case '+':
-      firstOperand = display.innerText;
-      console.log('firstOperand =', firstOperand);
-      display.innerText = '';
-      if (firstOperand !== '') {
-        let result = parseInt(firstOperand, 10) + parseInt(display.innerText, 10);
-        display.innerText = result;
-      }
-      break;
-    case '-':
-
-      break;
-    case '×':
-
-      break;
-    case '÷':
-
-      break;
-    case '=':
-
-      break;
+  if (e.target.innerText !== '=') { //   + - * /
+    operator = e.target.innerText;
   }
+
+  if (!leftOperand && !rightOperand) {
+    leftOperand = +display.innerText; // || 0
+    display.innerText = '0';
+  } else if (leftOperand && !rightOperand) {
+    rightOperand = +display.innerText; // || 0
+  }
+
+  if (leftOperand && rightOperand && operator) {
+    calculate();
+  }
+
+  console.log('leftOperand', leftOperand)
+  console.log('operator', operator)
+  console.log('rightOperand', rightOperand)
+  console.log('------------------------------------------');
+
 }
 
-if (display.innerText === '') {
-  display.innerText += '0';
+function calculate() {
+
+  display.innerText = '0';
+  console.log('leftOperand =', leftOperand);
+  console.log('rightOperand =', rightOperand);
+
+  switch (operator) {
+    case '+':
+      result = leftOperand + rightOperand;
+      break;
+    case '-':
+      result = leftOperand - rightOperand;
+      break;
+    case '×':
+      result = leftOperand * rightOperand;
+      break;
+    case '÷':
+      result = leftOperand / rightOperand;
+      break;
+    // case '=':
+    //   // if(leftOperand)
+    //   display.innerText = result.toString();
+    //   break;
+  }
+  display.innerText = result; //.toString()
+  leftOperand = result;
+  rightOperand = undefined;
 }
 
 function clearAll() {
   display.innerText = '0';
+  [leftOperand, rightOperand] = [0, 0];
+  operator = undefined;
 }
 
 function clearLast() {
-  display.innerText = display.innerText.slice(0, display.innerText.length - 1);
+  let displayLen = display.innerText.length;
+  if (displayLen === 1) {
+    display.innerText = '0';
+  } else {
+    display.innerText = display.innerText.slice(0, displayLen - 1);
+  }
 }
-
-// if (display.innerText === '0' || display.innerText === '') {
-//   return false;
