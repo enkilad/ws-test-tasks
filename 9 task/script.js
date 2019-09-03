@@ -26,7 +26,8 @@ function insertNum(e) {
   if (numberBtn && display.innerText === '0') {
     display.innerText = '';
     display.innerText += numberBtn;
-  } else if (numberBtn) {
+  } else if (numberBtn && display.innerText !== '' && !leftOperand) {
+    // display.innerText = '';
     display.innerText += numberBtn;
   } else if (numberBtn === '.' && (display.innerText.includes('.') || /* doesn't work */display.innerText[0] === '0')) {
     display.innerText += '';
@@ -43,15 +44,19 @@ function doMath(e) {
     display.innerText = '0';
   } else if (leftOperand && !rightOperand) {
     rightOperand = +display.innerText; // || 0
+    display.innerText = '0';
+  } else if (leftOperand && operator && display.innerText !== '') {
+    rightOperand = +display.innerText;
+    display.innerText = '0';
   }
 
   if (leftOperand && rightOperand && operator) {
     calculate();
   }
 
-  console.log('leftOperand', leftOperand)
+  console.log('leftOperand =', leftOperand)
   console.log('operator', operator)
-  console.log('rightOperand', rightOperand)
+  console.log('rightOperand =', rightOperand)
   console.log('------------------------------------------');
 
 }
@@ -59,8 +64,8 @@ function doMath(e) {
 function calculate() {
 
   display.innerText = '0';
-  console.log('leftOperand =', leftOperand);
-  console.log('rightOperand =', rightOperand);
+  // console.log('leftOperand =', leftOperand);
+  // console.log('rightOperand =', rightOperand);
 
   switch (operator) {
     case '+':
@@ -76,13 +81,15 @@ function calculate() {
       result = leftOperand / rightOperand;
       break;
     // case '=':
-    //   // if(leftOperand)
-    //   display.innerText = result.toString();
+    //   if (leftOperand)
+    //     display.innerText = result.toString();
     //   break;
   }
   display.innerText = result; //.toString()
   leftOperand = result;
-  rightOperand = undefined;
+  [rightOperand, operator] = [undefined, undefined];
+
+  // if (leftOperand && !rightOperand)
 }
 
 function clearAll() {
