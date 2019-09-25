@@ -1,12 +1,17 @@
 import React from 'react';
-import './App.css';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Weather from './pages/Weather Page';
+// import Login from './container/Login';
 
 class App extends React.Component {
   render() {
     return (
-      <div className="container">
-        <div>I was wondering</div>
-      </div>
+      <Router>
+        <Switch>
+          {/* <Route component={Login} path="/" exact/> */}
+          <Route component={Weather} path="/" />
+        </Switch>
+      </Router>
     );
   }
 }
