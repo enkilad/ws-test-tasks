@@ -1,7 +1,8 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Autocomplete from 'react-google-autocomplete';
 import openWeatherMap from '../../api';
-import { Button } from 'reactstrap';
+// import WeatherTable from './WeatherTable';
 
 class Weather extends React.Component {
   fetchWeather = async (lat, lon) => {
@@ -16,9 +17,7 @@ class Weather extends React.Component {
         if (+temp > 0) {
           temp = `+${temp}`;
         }
-        console.log(date);
-        console.log(temp);
-        console.log(weather);
+        return temp;
       }
     } catch (error) {
       console.error(error);
@@ -35,9 +34,28 @@ class Weather extends React.Component {
             const lon = place.geometry.location.lng();
             console.log(lat, lon);
             this.fetchWeather(lat, lon);
+            ReactDOM.render(
+              <table className="table">
+                <thead className="thead-dark">
+                  <tr>
+                    <th>Date</th>
+                    <th>Temperature (Celsium)</th>
+                    <th>Weather condition</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>,
+              document.querySelector('#weather-table')
+            );
           }}
         />
-        <Button color="primary">Submit</Button>
+        <div id="weather-table"></div>
       </div>
     );
   }
