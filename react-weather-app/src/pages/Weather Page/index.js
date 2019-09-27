@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Autocomplete from 'react-google-autocomplete';
 import openWeatherMap from '../../api';
 // import WeatherTable from './WeatherTable';
@@ -17,7 +16,15 @@ class Weather extends React.Component {
         if (+temp > 0) {
           temp = `+${temp}`;
         }
-        return temp;
+        document.getElementById('weather-table').insertAdjacentHTML(
+          'afterbegin',
+          `<tr>
+            <td>${date}</td>
+            <td>${temp}</td>
+            <td>${weather}</td>
+          </tr>`
+        );
+        // console.log(date, temp, weather);
       }
     } catch (error) {
       console.error(error);
@@ -26,36 +33,25 @@ class Weather extends React.Component {
 
   render() {
     return (
-      <div className="container">
+      <div>
         <Autocomplete
           className="form-control"
           onPlaceSelected={place => {
             const lat = place.geometry.location.lat();
             const lon = place.geometry.location.lng();
-            console.log(lat, lon);
             this.fetchWeather(lat, lon);
-            ReactDOM.render(
-              <table className="table">
-                <thead className="thead-dark">
-                  <tr>
-                    <th>Date</th>
-                    <th>Temperature (Celsium)</th>
-                    <th>Weather condition</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                </tbody>
-              </table>,
-              document.querySelector('#weather-table')
-            );
           }}
         />
-        <div id="weather-table"></div>
+        <table className="table">
+          <thead className="thead-dark">
+            <tr>
+              <th>Date</th>
+              <th>Temperature</th>
+              <th>Condition</th>
+            </tr>
+          </thead>
+          <tbody id="weather-table"></tbody>
+        </table>
       </div>
     );
   }

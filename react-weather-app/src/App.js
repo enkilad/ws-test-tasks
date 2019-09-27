@@ -1,17 +1,21 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Weather from './pages/Weather Page';
-// import Login from './container/Login';
+import Registration from './pages/Registration';
+import Login from './pages/Login';
 
 class App extends React.Component {
   render() {
     return (
-      <Router>
-        <Switch>
-          {/* <Route component={Login} path="/" exact/> */}
-          <Route component={Weather} path="/" />
-        </Switch>
-      </Router>
+      <div className="container">
+        <Router>
+          <Switch>
+            <Route component={Registration} path="/" exact />
+            <Route component={Weather} path="/weather" exact />
+            <Route component={Login} path="/login" exact />
+          </Switch>
+        </Router>
+      </div>
     );
   }
 }

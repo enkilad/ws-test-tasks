@@ -1,12 +1,14 @@
 import React from 'react';
 // import Weather from '../Weather Page';
 
-const WeatherTable = () => {
-  return (
-    <div>
-      <div>123123123</div>
-    </div>
-  );
-};
+class WeatherTable extends React.Component {
+  render() {
+    return(
+      <table>
+        
+      </table>
+    )
+  }
+}
 
 export default WeatherTable;
