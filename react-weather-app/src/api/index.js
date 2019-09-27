@@ -1,5 +1,5 @@
 import axios from 'axios';
 
-export default axios.create({
+export const axiosClient = axios.create({
   baseURL: 'https://api.openweathermap.org/'
 });

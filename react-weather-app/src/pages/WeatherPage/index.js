@@ -1,31 +1,27 @@
 import React from 'react';
 import Autocomplete from 'react-google-autocomplete';
-import openWeatherMap from '../../api';
+import { axiosClient } from '../../api';
+// import { Link } from 'react-router-dom';
 // import WeatherTable from './WeatherTable';
 
 class Weather extends React.Component {
+  state = { weatherList: [] };
+
   fetchWeather = async (lat, lon) => {
     try {
-      const response = await openWeatherMap.get(
+      const response = await axiosClient.get(
         `/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&appid=2b7a8efd8eef6e6ca7dbd4539f13bb02`
       );
-      for (let obj of response.data.list) {
+      const weatherList = response.data.list.map(obj => {
         let temp = Math.floor(obj.main.temp);
-        let date = obj.dt_txt;
-        let weather = obj.weather[0].main;
+        const date = obj.dt_txt;
+        const weather = obj.weather[0].main;
         if (+temp > 0) {
           temp = `+${temp}`;
         }
-        document.getElementById('weather-table').insertAdjacentHTML(
-          'afterbegin',
-          `<tr>
-            <td>${date}</td>
-            <td>${temp}</td>
-            <td>${weather}</td>
-          </tr>`
-        );
-        // console.log(date, temp, weather);
-      }
+        return { temp, date, weather };
+      });
+      this.setState({ weatherList });
     } catch (error) {
       console.error(error);
     }
@@ -50,7 +46,17 @@ class Weather extends React.Component {
               <th>Condition</th>
             </tr>
           </thead>
-          <tbody id="weather-table"></tbody>
+          <tbody id="weather-table">
+            {this.state.weatherList.map(({ date, temp, weather }) => {
+              return (
+                <tr>
+                  <td>{date}</td>
+                  <td>{temp}</td>
+                  <td>{weather}</td>
+                </tr>
+              );
+            })}
+          </tbody>
         </table>
       </div>
     );
