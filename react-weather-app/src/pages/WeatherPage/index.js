@@ -1,8 +1,6 @@
 import React from 'react';
 import Autocomplete from 'react-google-autocomplete';
 import { axiosClient } from '../../api';
-// import { Link } from 'react-router-dom';
-// import WeatherTable from './WeatherTable';
 
 class Weather extends React.Component {
   state = { weatherList: [] };
@@ -26,6 +24,8 @@ class Weather extends React.Component {
       console.error(error);
     }
   };
+
+  // autocompFunc = () => {};
 
   render() {
     return (

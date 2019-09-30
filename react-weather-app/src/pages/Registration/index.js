@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import './index.css';
 
 export class Registration extends Component {
   render() {
@@ -31,11 +30,11 @@ export class Registration extends Component {
             />
           </FormGroup>
           <FormGroup>
-            <Label for="password">Confirm Password</Label>
+            <Label for="confirmPassword">Confirm Password</Label>
             <Input
               type="password"
-              name="password"
-              id="password"
+              name="confirmPassword"
+              id="confirmPassword"
               placeholder="Your passwords should match"
             />
           </FormGroup>
