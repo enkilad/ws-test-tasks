@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>7</title>
+</head>
+
+<body>
+  <script>
+
+    let screen = {
+      width: 10,
+      height: 5,
+      diagonal: 9,
+      matrix: 'IPS',
+      price: 70,
+      brand: 'LG',
+      hasCoolFeatures: false,
+    };
+
+    function sumOfMultipliedNums(obj) {
+      let sum = 0;
+      for (let key in obj) {
+        if (typeof obj[key] == 'number') {
+          obj[key] *= 2;
+          sum += obj[key];
+        }
+      }
+      return [obj, sum];
+    }
+
+    // function sumOfMultipliedNums(obj) {
+    //   let sum = 0;
+    //   let objKeys = Object.values(obj);
+    //   objKeys.map((value) => {
+    //     if (typeof objKeys[value] == 'number') {
+    //       [value] *= 2;
+    //       sum += [value];
+    //     }
+    //   });
+    //   return [objKeys, sum];
+    // }
+
+    console.log(sumOfMultipliedNums(screen));
+
+  </script>
+</body>
+
+</html>
